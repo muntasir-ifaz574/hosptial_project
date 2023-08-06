@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1689591268 source:c:\users\ifaz\documents\hospital_managment\main.cpp
+	<iostream>
+	<fstream>
+	<ctime>
+	<cstdlib>
+	<vector>
+

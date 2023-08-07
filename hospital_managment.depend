@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1689591268 source:c:\users\ifaz\documents\hospital_managment\main.cpp
+1691418624 source:c:\users\ifaz\documents\hospital_managment\main.cpp
 	<iostream>
 	<fstream>
 	<ctime>

@@ -22,6 +22,7 @@ struct Patient {
     char admission[30];
     bool diagnosed;
     string doctorName;
+    string appointmentDate;
     Patient* next;
 
     Patient() {
@@ -35,7 +36,7 @@ struct Doctor {
     string specialization;
     string contact;
     string email;
-    // Add more details as needed
+
 };
 
 class DoctorManagementSystem {
@@ -68,7 +69,7 @@ public:
             cout << "Specialization: " << doctor->specialization << endl;
             cout << "Contact: " << doctor->contact << endl;
             cout << "Email: " << doctor->email << endl;
-            // Display more details as needed
+
         }
         else {
             cout << "Doctor not found!" << endl;
@@ -157,9 +158,9 @@ public:
         cin >> newPatient->blood_gp;
         cout << "Enter Patient Contact: ";
         cin >> newPatient->contact;
-        cout << "Enter Patient CNIC: ";
+        cout << "Enter Patient NID: ";
         cin.ignore();
-        cin.getline(newPatient->cnic, 100);
+        cin.getline(newPatient->0, 100);
         cout << "Enter Patient Address: ";
         cin.getline(newPatient->address, 200);
 
@@ -475,7 +476,8 @@ public:
         cout << "6. Add Doctor" << endl;
         cout << "7. Display Doctor Details" << endl;
         cout << "8. Schedule Patient Appointment" << endl;
-        cout << "9. Logout" << endl;
+        cout << "9. Display Doctor-wise Appointment List" << endl;
+        cout << "10. Logout" << endl;
         cout << "----------------------" << endl;
         cout << "Enter your choice: ";
     }
@@ -491,9 +493,12 @@ public:
         Patient* temp = head;
         while (temp != NULL) {
             if (temp->id == id) {
+                cout << "Enter Appointment Date and Time: ";
+                cin.ignore();
+                getline(cin, temp->appointmentDate);
+
                 cout << "Enter Doctor Name: ";
                 string doctorName;
-                cin.ignore();
                 getline(cin, doctorName);
                 temp->doctorName = doctorName;
 
@@ -513,6 +518,26 @@ public:
         cout << "Patient not found!" << endl;
         clearConsole();
     }
+
+
+    void displayDoctorAppointments(const string& doctorName) {
+        Patient* temp = head;
+        bool found = false;
+        while (temp != NULL) {
+            if (temp->doctorName == doctorName) {
+                cout << "Patient ID: " << temp->id << " | Appointment: " << temp->appointmentDate << endl;
+                found = true;
+            }
+            temp = temp->next;
+        }
+
+        if (!found) {
+            cout << "No appointments found for this doctor." << endl;
+        }
+        clearConsole();
+    }
+
+
 
     void run() {
         string password;
@@ -595,8 +620,15 @@ public:
                     cin >> id;
                     scheduleAppointment(id);
                     break;
+                }case 9: {
+                    string doctorName;
+                    cout << "Enter Doctor Name: ";
+                    cin.ignore();
+                    getline(cin, doctorName);
+                    displayDoctorAppointments(doctorName);
+                    break;
                 }
-                case 9:
+                case 10:
                     isRunning = false;
                     break;
                 default:

@@ -160,7 +160,7 @@ public:
         cin >> newPatient->contact;
         cout << "Enter Patient NID: ";
         cin.ignore();
-        cin.getline(newPatient->0, 100);
+        cin.getline(newPatient->cnic, 100);
         cout << "Enter Patient Address: ";
         cin.getline(newPatient->address, 200);
 
@@ -380,6 +380,9 @@ public:
             file << temp->address << endl;
             file << temp->diagnosed << endl;
             file << temp->doctorName << endl;
+            file << temp->diagnosed << endl;
+            file << temp->doctorName << endl;
+            file << temp->appointmentDate << endl;
 
             if (temp->diagnosed) {
                 file << temp->symptom << endl;
@@ -510,6 +513,7 @@ public:
                 }
 
                 clearConsole();
+                saveData(); // Save patient data after scheduling appointment
                 return;
             }
             temp = temp->next;
@@ -521,21 +525,28 @@ public:
 
 
     void displayDoctorAppointments(const string& doctorName) {
-        Patient* temp = head;
-        bool found = false;
-        while (temp != NULL) {
-            if (temp->doctorName == doctorName) {
-                cout << "Patient ID: " << temp->id << " | Appointment: " << temp->appointmentDate << endl;
-                found = true;
-            }
-            temp = temp->next;
-        }
+    Patient* temp = head;
+    bool found = false;
 
-        if (!found) {
-            cout << "No appointments found for this doctor." << endl;
+    cout << "Doctor-wise Appointment List for " << doctorName << ":" << endl;
+
+    while (temp != NULL) {
+        if (temp->doctorName == doctorName) {
+            cout << "Patient ID: " << temp->id << " | Appointment: " << temp->appointmentDate << endl;
+            found = true;
         }
-        clearConsole();
+        temp = temp->next;
     }
+
+    if (!found) {
+        cout << "No appointments found for this doctor." << endl;
+    }
+
+    clearConsole();
+}
+
+
+
 
 
 
